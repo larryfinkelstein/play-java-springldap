@@ -1,0 +1,25 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           @controllers.Application.index()
+GET		/persons					@controllers.Application.list(f ?= "")
+
+# Add person
+GET     /person/new              	@controllers.Application.create()
+POST    /person						@controllers.Application.save()
+
+# Edit existing person
+GET     /person/:id              	@controllers.Application.edit(id: String)
+POST    /person/:id              	@controllers.Application.update(id: String)
+
+# Delete a person
+POST    /person/:id/delete       	@controllers.Application.delete(id: String)
+
+# JSON Responses
+GET		/person/:id					@controllers.Application.findPerson(id: String)
+GET		/person/search/:id			@controllers.Application.searchPerson(id: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
