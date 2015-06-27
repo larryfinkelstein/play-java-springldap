@@ -1,0 +1,77 @@
+version: 1
+
+dn: dc=example,dc=com
+objectClass: top
+objectClass: domain
+dc: example
+
+dn: ou=People,dc=example,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Groups,dc=example,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: Groups
+
+dn: uid=userone,ou=People,dc=example, dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: userone
+userPassword: userOnePassword
+displayName: User One
+cn: User One
+givenName: User
+sn: One
+personalTitle: Mr
+title: Architect
+mail: userone@example.com
+
+dn: uid=usertwo,ou=People,dc=example, dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: usertwo
+userPassword: userTwoPassword
+displayName: User Two
+cn: User Two
+givenName: User
+sn: Two
+personalTitle: Mr
+title: Senior Programmer
+mail: usertwo@example.com
+
+dn: uid=userthree,ou=People,dc=example, dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: userthree
+userPassword: userThreePassword
+displayName: User Three
+cn: User Three
+givenName: User
+sn: Three
+personalTitle: Mrs
+title: I/S Engineer
+mail: userthree@gexample.com
+
+
+dn: uid=deleteuser,ou=People,dc=example, dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: deleteuser
+userPassword: userDeletePassword
+displayName: Delete User
+cn: Delete User
+givenName: Delete
+sn: User
+personalTitle: Mr
+title: Delete Engineer
+mail: deleteuser@example.com

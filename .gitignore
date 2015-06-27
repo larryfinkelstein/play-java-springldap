@@ -1,0 +1,11 @@
+logs
+target
+/.cache-main
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID
+/activator*
+/bin/
