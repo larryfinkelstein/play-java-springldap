@@ -1,0 +1,30 @@
+@(personForm: Form[Person])
+
+@import helper._
+
+@main {
+    
+    <h1>Add a person</h1>
+    
+    @form(routes.Application.save()) {
+        
+        <fieldset >
+        
+            @inputText(personForm("cn"), '_label -> "Common name", '_help -> "")
+            @inputText(personForm("givenName"), '_label -> "First name", '_help -> "")
+            @inputText(personForm("sn"), '_label -> "Last name", '_help -> "")
+            @inputText(personForm("mail"), '_label -> "eMail", '_help -> "")
+            @inputText(personForm("title"), '_label -> "Title", '_help -> "")
+            @inputText(personForm("telephonenumber"), '_label -> "Telephone number", '_help -> "")
+            @inputText(personForm("uid"), '_label -> "User Id", '_help -> "")
+
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Create this person" class="btn-primary"> or 
+            <a href="@routes.Application.index()" class="btn">Cancel</a> 
+        </div>
+        
+    }
+    
+}

@@ -1,0 +1,63 @@
+@(filter: String, persons: Iterable[Person] )
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th class="headerSortDown" ">
+        <!-- a href="@routes.Application.index()"></a -->
+        @title
+    </th>
+}
+
+@main {
+
+	<script src='@routes.Assets.versioned("javascripts/index.js")' type="text/javascript"  ></script>	
+	
+	<h1 id="homeTitle">Search for User ID</h1>
+	
+    @if(flash.containsKey("success")) {
+       <div class="alert-message warning">
+           <strong>Done!</strong> @flash.get("success")
+       </div>
+   } 
+
+    <div id="actions">
+        
+        <form action="@routes.Application.list(filter)" method="GET">
+            <input type="search" id="uid" name="f" value="" placeholder="Filter by uid...">
+            <input type="submit" id="searchsubmit" value="Filter by uid" class="btn-primary">
+        </form>
+
+        <a class="btn success" id="add" href="@routes.Application.create()">Add a Person</a>
+    </div>
+
+   @if(persons == null) {
+        
+        <div class="well">
+            <em>Nothing to display</em>
+        </div>
+        
+    } else {
+        
+        <table class="people zebra-striped">
+            <thead>
+                <tr>
+                    @header("uid", "User ID")
+                    @header("cn", "Common Name")
+                    @header("mail", "eMail")
+                </tr>
+            </thead>
+            <tbody>
+                @for(person <- persons.iterator) {
+                	<tr>
+                		<td><a href="@routes.Application.edit(person.uid)">@person.uid</a></td>
+                		<td>@person.cn</td>
+                		<td>@person.mail</td>
+                	</tr>
+                }
+           </tbody>
+        </table>
+	}
+
+}
