@@ -66,6 +66,7 @@ public class PersonRepositoryTest extends AbstractJUnit4SpringContextTests {
 		//entry = conn.getEntry("CN=UserOne,ou=People,dc=example, dc=com");
 		entry = conn.getEntry("uid=userone,ou=People,dc=example, dc=com");
 		//Logger.debug(entry.toLDIFString());
+		assertNotNull(entry);
 	}
 	
 	@Test
@@ -92,10 +93,12 @@ public class PersonRepositoryTest extends AbstractJUnit4SpringContextTests {
     	final String UID = "userone";
     	Person person = personRepository.findOne(query().where("uid").is(UID));
         assertNotNull(person);
-        assertEquals(person.uid, UID);
-        assertEquals(person.givenName, "User");
-        assertEquals(person.sn, "One");
-        assertEquals(person.mail, "userone@example.com");
+        //Logger.debug(person.uid);
+        assertEquals(UID, person.uid);
+        assertEquals("User", person.givenName);
+        assertEquals("One", person.sn);
+        //Logger.debug(person.mail);
+        assertEquals("userone@example.com", person.mail);
     }
 
     @Test
@@ -103,10 +106,10 @@ public class PersonRepositoryTest extends AbstractJUnit4SpringContextTests {
     	final String UID = "userone";
     	Person person = personRepository.findByUid(UID);
         assertNotNull(person);
-        assertEquals(person.uid, UID);
-        assertEquals(person.givenName, "User");
-        assertEquals(person.sn, "One");
-        assertEquals(person.mail, "userone@example.com");
+        assertEquals(UID, person.uid);
+        assertEquals("User", person.givenName);
+        assertEquals("One", person.sn);
+        assertEquals("userone@example.com", person.mail);
     }
     
     @Test
