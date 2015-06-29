@@ -16,6 +16,7 @@ libraryDependencies ++= Seq(
   "org.webjars" % "jquery-ui" % "1.11.4",
   "org.webjars" % "bootstrap" % "3.3.5",
   "commons-pool" % "commons-pool" % "1.6",
+  "org.mockito" % "mockito-core" % "1.10.19" % "test",
   "org.springframework.data" % "spring-data-commons-core" % "1.4.1.RELEASE",
   "org.springframework" % "spring-expression" % springVersion,
   "org.springframework" % "spring-aop" % springVersion,
