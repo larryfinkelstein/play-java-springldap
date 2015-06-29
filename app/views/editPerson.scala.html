@@ -7,7 +7,24 @@
     <h1>Edit person</h1>
     
     @form(routes.Application.update(id)) {
-        
+
+		@if(personForm.hasGlobalErrors) {
+			<div class="alert alert-danger">
+			    <p class="error">
+			        @personForm.globalError
+			    </p>
+		    </div>
+		}
+       @if(personForm.hasErrors) {
+           <div class="alert alert-danger">
+             <p class="small">
+             	Validation Errors!
+             </p>
+           </div>
+        }
+
+
+		<!-- input type="hidden" value="@personForm("dn").value" name="dn" / -->        
         <fieldset >
         
             @inputText(personForm("cn"), '_label -> "Common name", '_help -> "")

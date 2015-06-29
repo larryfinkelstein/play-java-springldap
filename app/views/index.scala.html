@@ -17,10 +17,16 @@
 	<h1 id="homeTitle">Search for User ID</h1>
 	
     @if(flash.containsKey("success")) {
-       <div class="alert-message warning">
+       <div class="alert-message success">
            <strong>Done!</strong> @flash.get("success")
        </div>
-   } 
+	} else {
+	    @if(flash.containsKey("failure")) {
+	       <div class="alert-message error">
+	           <strong>Error!</strong> @flash.get("failure")
+	       </div>
+	    }
+	} 
 
     <div id="actions">
         
