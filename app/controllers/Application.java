@@ -28,7 +28,7 @@ public class Application extends Controller {
      * Display the index page
      */
     public Result index() {
-        return ok(index.render("", null));
+    	return ok(index.render("", null));
     }
 
     /**
@@ -37,7 +37,12 @@ public class Application extends Controller {
      * @param String filter 
      */
     public Result list(String filter) {
-        return ok(index.render(filter, filterPerson(filter)));
+    	Iterable<Person> persons = filterPerson(filter);
+    	if (persons == null) {
+			return redirect(routes.Application.index());
+		} else {
+			return ok(index.render(filter, persons));
+		}
     }
 
     /**
@@ -60,11 +65,11 @@ public class Application extends Controller {
     /**
      * Search PersonRepository for uid or cn like filter
      * 
-     * @param String filter
+     * @param String likeFilter
      * @return Iterable<Person>
      */
-    private Iterable<Person> filterPerson(String filter) {
-    	String searchId = "*"+filter+"*";
+    private Iterable<Person> filterPerson(String likeFilter) {
+    	String searchId = "*"+likeFilter+"*";
     	LikeFilter uidFilter = new LikeFilter("uid", searchId);
     	LikeFilter cnFilter = new LikeFilter("cn", searchId);
     	OrFilter orFilter = new OrFilter();
@@ -73,11 +78,17 @@ public class Application extends Controller {
     	AndFilter filter = new AndFilter();
     	filter.append(ocFilter).append(orFilter);
     	//Logger.debug(filter.toString());
-    	Iterable<Person> persons = personRepository.findAll(
-    		query()
-    		.searchScope(SearchScope.SUBTREE)
-    		.countLimit(10)
-    		.filter(filter));
+    	Iterable<Person> persons = null;
+    	try {
+        	persons = personRepository.findAll(
+            		query()
+            		.searchScope(SearchScope.SUBTREE)
+            		.countLimit(10)
+            		.filter(filter));
+		} catch (Exception e) {
+			Logger.error(e.getMessage());
+			flash("failure", "Unable to retrieve list of people - " + e.getMessage());
+		}
     	return persons;
     }
     
@@ -88,7 +99,12 @@ public class Application extends Controller {
      * @return Person collection in Json 
      */
     public Result searchPerson(String id) {
-    	return ok(toJson(filterPerson(id)));
+    	Iterable<Person> persons = filterPerson(id);
+    	if (persons == null) {
+			return redirect(routes.Application.index());
+		} else {
+			return ok(toJson(persons));
+		}
     }
     
     /**
@@ -137,6 +153,7 @@ public class Application extends Controller {
      * @param id Id of the person to edit
      */
     public Result edit(String id) {
+    	//Logger.debug(id);
         Form<Person> personForm = form(Person.class).fill(
             personRepository.findByUid(id)
         );
@@ -153,12 +170,11 @@ public class Application extends Controller {
     public Result update(String id) {
         Form<Person> personForm = form(Person.class).bindFromRequest();
         if(personForm.hasErrors()) {
+        	Logger.warn("Errors on edit form "+personForm.errors());
             return badRequest(editPerson.render(id, personForm));
         }
         Person person = personForm.get();
-        Person personWithDn = personRepository.findByUid(id); 
-        //Logger.debug(person.dn.toString());
-        person.dn = personWithDn.dn;
+        Person personWithDn = personRepository.findByUid(id);
         personRepository. save(person);
         flash("success", "Person " + personForm.get().uid + " has been updated");
         return redirect(routes.Application.index());
