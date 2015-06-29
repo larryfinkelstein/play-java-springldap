@@ -23,7 +23,7 @@ public class TestLdapConfig extends LdapConfig {
     	 */
 		LdapContextSource contextSource = new LdapContextSource();
 		contextSource.setUrl("ldap://localhost:389");
-		contextSource.setBase("dc=example,dc=com");
+		//contextSource.setBase("dc=example,dc=com");
 		contextSource.setUserDn("cn=Directory Manager");
 		contextSource.setPassword("password");
 		return contextSource;
